@@ -1,0 +1,14 @@
+require_relative './config/environment'
+require 'sinatra/activerecord/rake'
+
+desc "Opens the console"
+task :console do
+  Pry.start
+end
+
+desc "Deletes all table records"
+task :delete_all do
+    User.delete_all
+    Portfolio.delete_all
+    Investment.delete_all
+end

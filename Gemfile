@@ -6,3 +6,5 @@ gem 'require_all'
 gem 'sqlite3'
 gem 'rake'     
 gem 'pry'
+gem 'rest-client'
+
