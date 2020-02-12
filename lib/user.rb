@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
     def delete_user
         self.portfolios.each {|port| port.delete_portfolio}
         self.delete
-        puts "User deleted."
+        puts "User Deleted."
     end
 
 end

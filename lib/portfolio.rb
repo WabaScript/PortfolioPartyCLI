@@ -72,11 +72,6 @@ class Portfolio < ActiveRecord::Base
         end
         conbined_investment
     end
- 
-
-    # def sell_stock_by_date (symbol, purcahse_date, num_shares)
-    #     Investment.find_by(symbol: symbol, purchase_date)
-    # end
 
     def sell_stock_by_investment_id (investment_id, num_shares)
         if Investment.find(investment_id).num_shares < num_shares
@@ -103,7 +98,7 @@ class Portfolio < ActiveRecord::Base
     end
 
     def delete_portfolio
-        self.investments.each {|investment| investment.delete}
+        self.investments.each {|investment| investment.delete_investment}
         self.delete
         puts "Portfolio Deleted."
     end
