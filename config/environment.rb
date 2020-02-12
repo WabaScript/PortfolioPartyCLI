@@ -1,10 +1,12 @@
 require 'pry'
 require 'bundler/setup'
 require 'date'
+require 'time'
 require 'json'
 require 'rest-client'
 
 Bundler.require
+
 require_rel '../config'
 require_rel '../lib'
 
