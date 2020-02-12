@@ -13,5 +13,5 @@ class Investment < ActiveRecord::Base
             false
         end
     end
-    
+
 end
