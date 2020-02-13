@@ -4,6 +4,7 @@ require 'date'
 require 'time'
 require 'json'
 require 'rest-client'
+require 'tty-prompt'
 
 Bundler.require
 

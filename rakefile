@@ -12,3 +12,8 @@ task :delete_all do
     Portfolio.delete_all
     Investment.delete_all
 end
+
+desc "Starts application"
+task :start do
+  ruby "./run.rb"
+end

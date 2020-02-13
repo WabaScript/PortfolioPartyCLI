@@ -1,14 +1,12 @@
 require_relative "./config/environment"
 
-def welcome_message
-    puts "Welcome to the Portfolio Generator!"
-end
+#-----Pre-run Data Load-----#
+#Before demo run "Investment.update_all_prices_to_current_slowly_better"
+#This will update all investment values to the current day value
+#This only needs to be done once per day, but will take several minutes due to the 5 API calls per minute limit
+#(Total number of investments / 5 minutes)
 
-def log_in
-    puts "Press 1 to Create a new user, or press 2 to log in: "
-    input = gets.chomp
-end
+main_menu 
 
-
-binding.pry
+# binding.pry
 0

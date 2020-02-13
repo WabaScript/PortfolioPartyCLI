@@ -8,14 +8,17 @@ class Portfolio < ActiveRecord::Base
         Investment.all.select {|investment| investment.portfolio_id == self.id}
     end
 
-
-
     def view_investments
+        puts "ID: #{self.id} Name: #{self.portfolio_name}\n"
         puts "| Investmend ID | Symbol | Purchase Date | Purchase Price | Current Price | Number of Shares | Portfolio Name |"
         self.investments.each do |i|
         puts "| #{i.id} | #{i.symbol} | #{i.purchase_date} | #{i.purchase_price} | #{i.current_price} | #{i.num_shares} | #{self.portfolio_name} |"
         end
-        return 
+        puts "\n"
+    end
+
+    def portfolio_value
+        self.investments.
     end
 
     def validate_buy (symbol, num_shares)
@@ -87,10 +90,6 @@ class Portfolio < ActiveRecord::Base
 
     end
 
-
-    def validate_sell 
-    end
-
     def update_portfolio_to_current_prices
         self.investments.each do |investment|
             investment.update(current_price: get_current_stock_price(investment.symbol))
@@ -102,6 +101,8 @@ class Portfolio < ActiveRecord::Base
         self.delete
         puts "Portfolio Deleted."
     end
+
+    #Portfolio Value Method
 
 
 
