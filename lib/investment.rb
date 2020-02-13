@@ -44,13 +44,22 @@ class Investment < ActiveRecord::Base
         puts "Investment Deleted."
     end
 
-<<<<<<< HEAD
-    # def investment_value
-    #     self.
-=======
     def investment_value
         self.num_shares * self.current_price
     end
->>>>>>> 44dfead65555e8d085761f622b33af5cd01f3687
+
+    def initial_inv_value
+        (self.purchase_price * self.num_shares)
+    end
+
+    def investment_pl
+        self.investment_value - self.initial_inv_value
+    end
+
+    def investment_pl_ratio
+        ratio = self.investment_pl / self.initial_inv_value * 100 
+    end
+
+  
 
 end

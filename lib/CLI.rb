@@ -70,7 +70,7 @@ def user_logged_in_menu
     case input
     when "View All Investments"
         if $active_user.investments.length >= 1
-        puts "#{$active_user.investments}"
+        $active_user.view_all_investments
         else
             puts "You have no investments."
         end
@@ -170,10 +170,8 @@ def modify_user
     $active_user.display_information
     
     puts "\nModify User Info.  Username cannot be changed.\n\n"
-    menu_options = ["Password", "First Name", "Last Name", "Email", "Delete User"]
+    menu_options = ["Password", "First Name", "Last Name", "Email", "Delete User", "Return to Portfolio Menu"]
     input = $prompt.select("Which attribute would you like to edit:", menu_options)
-<<<<<<< HEAD
-=======
     
     case input
     when "Password"
@@ -213,6 +211,8 @@ def modify_user
             puts "Returning to Modify User Menu.\n"
             modify_user
         end
+    when "Return to Portfolio Menu"
+        puts "Returning to Portfolio Menu.\n"
+        user_logged_in_menu
     end
->>>>>>> 44dfead65555e8d085761f622b33af5cd01f3687
 end
