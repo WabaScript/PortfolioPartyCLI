@@ -17,9 +17,9 @@ class Portfolio < ActiveRecord::Base
         puts "\n"
     end
 
-    def portfolio_value
-        self.investments.
-    end
+    # def portfolio_value
+    #     self.investments.
+    # end
 
     def validate_buy (symbol, num_shares)
         current_price = get_current_stock_price(symbol)
@@ -103,10 +103,4 @@ class Portfolio < ActiveRecord::Base
     end
 
     #Portfolio Value Method
-
-
-
-
-
-
 end

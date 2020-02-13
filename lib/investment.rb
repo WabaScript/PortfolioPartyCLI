@@ -45,7 +45,7 @@ class Investment < ActiveRecord::Base
         puts "Investment Deleted."
     end
 
-    def investment_value
-        self.
+    # def investment_value
+    #     self.
 
 end

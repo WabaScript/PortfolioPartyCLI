@@ -17,3 +17,8 @@ desc "Starts application"
 task :start do
   ruby "./run.rb"
 end
+
+desc "Get current stock data"
+task :update_prices do
+    Investment.update_all_prices_to_current_slowly_better
+end

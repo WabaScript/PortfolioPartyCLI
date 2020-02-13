@@ -69,13 +69,28 @@ def user_logged_in_menu
     input = $prompt.select("Please choose an option:", menu_options)
     case input
     when "View All Investments"
+        if $active_user.investments.length >= 1
         puts "#{$active_user.investments}"
+        else
+            puts "You have no investments."
+        end
         user_logged_in_menu
     when "View Portfolio (BUY / SELL / RESEARCH)"
-        portfolio_selection = $prompt.ask("Please enter portfolio ID:")
+        portfolio_selection = $prompt.ask("Please enter portfolio ID:", required: true)
+        if Portfolio.exists?(portfolio_selection)
         $active_portfolio = Portfolio.find(portfolio_selection)
-        $active_portfolio.view_investments
-        portfolio_menu
+            if $active_user.id == $active_portfolio.user_id
+                puts "#{$active_portfolio.portfolio_name} contains:"
+                $active_portfolio.view_investments
+            portfolio_menu
+            else
+                puts "This portfolio ID does not belong to you"
+                user_logged_in_menu
+            end
+        else
+            puts "No Portfolio with that ID found"
+            user_logged_in_menu
+        end
     when "Create New Portfolio"
         puts "Portfolio name must be unique."
         new_port_name_input = $prompt.ask("Please enter new portfolio name:")
@@ -132,9 +147,14 @@ def portfolio_menu
     when "Sell Stock"
         invest_id_input = $prompt.ask("Please enter investment ID:")
         num_shares_input = $prompt.ask("Please enter number of shares to sell:")
-        $active_portfolio.sell_stock_by_investment_id(invest_id_input.to_i, num_shares_input.to_i)
-        $active_portfolio.view_investments
-        portfolio_menu
+        if $active_portfolio.id == Investment.find(invest_id_input).portfolio_id 
+            $active_portfolio.sell_stock_by_investment_id(invest_id_input.to_i, num_shares_input.to_i)
+            $active_portfolio.view_investments
+            portfolio_menu
+        else
+            puts "Investment ID error"
+            portfolio_menu
+        end
     when "Research Stock"
         symbol_input = $prompt.ask("Please enter stock ticker symbol:")
         get_current_stock_data(symbol_input)
@@ -149,3 +169,4 @@ def modify_user
     puts "Modify User Info.  Username cannot be edited."
     menu_options = ["Password",  ]
     input = $prompt.select("Which attribute would you like to edit:", menu_options)
+end
