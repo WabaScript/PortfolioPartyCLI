@@ -10,10 +10,8 @@ def main_menu
     input = $prompt.select("Please choose an option:", menu_options)
     case input
     when "Login"
-        puts "Go to Login Screen"
         login
     when "Create New User"
-        puts "Go to New User Screen"
         create_a_new_user
     when "Quit"
         puts "Goodbye"
@@ -37,6 +35,8 @@ def login
 end
 
 def create_a_new_user
+    puts "Username must be unique and cannot be changed after account creation.\n\n"
+
     username_input = $prompt.ask("Please enter new username:")
     password_input = $prompt.mask("Please enter new password:")
     first_name_input = $prompt.ask("Please enter first name:")
@@ -65,7 +65,7 @@ def user_logged_in_menu
     puts "Your existing portfolios are:\n\n"
     $active_user.portfolios.each {|portfolio| puts "| ID: #{portfolio.id} | Name: #{portfolio.portfolio_name}"}
     puts "\n"
-    menu_options = ["View All Investments", "View Portfolio (BUY / SELL / RESEARCH)", "Create New Portfolio", "Delete Portfolio", "Modify User Info", "Return to Main Menu" ]
+    menu_options = ["View All Investments", "View Portfolio (BUY / SELL / RESEARCH)", "Create New Portfolio", "Delete Portfolio", "Modify / Display User Info", "Return to Main Menu" ]
     input = $prompt.select("Please choose an option:", menu_options)
     case input
     when "View All Investments"
@@ -125,7 +125,7 @@ def user_logged_in_menu
                 puts "Returning to Portfolio Menu\n"
                 user_logged_in_menu
             end
-    when "Modify User Info"
+    when "Modify / Display User Info"
         modify_user
     when "Return to Main Menu"
         $active_user = nil
@@ -166,7 +166,53 @@ def portfolio_menu
 end
 
 def modify_user
-    puts "Modify User Info.  Username cannot be edited."
-    menu_options = ["Password",  ]
+    puts "Current user details:\n"
+    $active_user.display_information
+    
+    puts "\nModify User Info.  Username cannot be changed.\n\n"
+    menu_options = ["Password", "First Name", "Last Name", "Email", "Delete User"]
     input = $prompt.select("Which attribute would you like to edit:", menu_options)
+<<<<<<< HEAD
+=======
+    
+    case input
+    when "Password"
+    password_input = $prompt.mask("Please enter new password:")
+    $active_user.update(password: password_input)
+    puts "Password successfully updated."
+    puts "Returning to Portfolio Menu.\n"
+    user_logged_in_menu
+    when "First Name"
+    first_name_input = $prompt.ask("Please enter first name:")
+    $active_user.update(first_name: first_name_input)
+    puts "First name successfully updated."
+    puts "Returning to Portfolio Menu.\n"
+    user_logged_in_menu
+    when "Last Name"
+    last_name_input = $prompt.ask("Please enter last name:")
+    $active_user.update(last_name: last_name_input)
+    puts "Last name successfully updated."
+    puts "Returning to Portfolio Menu.\n"
+    user_logged_in_menu
+    when "Email"
+    email_input = $prompt.ask("Please enter email address:") {|q| q.validate :email}
+    $active_user.update(email: email_input)
+    puts "Email successfully updated."
+    puts "Returning to Portfolio Menu.\n"
+    user_logged_in_menu
+    when "Delete User"
+        yes_no = $prompt.yes?("Are you sure?  This will permanently delete the user, all associated portfolios and investments.")
+        if yes_no == true
+            $active_user.delete_user
+            $active_user = nil
+            puts "User deleted.\n"
+            puts "Returning to Main Menu.\n"
+            main_menu
+        else
+            puts "Delete aborted.\n"
+            puts "Returning to Modify User Menu.\n"
+            modify_user
+        end
+    end
+>>>>>>> 44dfead65555e8d085761f622b33af5cd01f3687
 end

@@ -8,18 +8,32 @@ class Portfolio < ActiveRecord::Base
         Investment.all.select {|investment| investment.portfolio_id == self.id}
     end
 
+    # def view_investments
+    #     puts "ID: #{self.id} Name: #{self.portfolio_name}\n"
+    #     puts "| Investmend ID | Symbol | Purchase Date | Purchase Price | Current Price | Number of Shares | Portfolio Name |"
+    #     self.investments.each do |i|
+    #     puts "| #{i.id} | #{i.symbol} | #{i.purchase_date} | #{i.purchase_price} | #{i.current_price} | #{i.num_shares} | #{self.portfolio_name} |"
+    #     end
+    #     puts "\n"
+    # end
+
     def view_investments
-        puts "ID: #{self.id} Name: #{self.portfolio_name}\n"
+        puts "\n| Portfolio ID: #{self.id} | Name: #{self.portfolio_name} | Current Cash: #{self.current_cash} | Value: #{self.portfolio_value} |"
         puts "| Investmend ID | Symbol | Purchase Date | Purchase Price | Current Price | Number of Shares | Portfolio Name |"
         self.investments.each do |i|
-        puts "| #{i.id} | #{i.symbol} | #{i.purchase_date} | #{i.purchase_price} | #{i.current_price} | #{i.num_shares} | #{self.portfolio_name} |"
+        puts "| #{i.id.to_s.ljust(14)}| #{i.symbol.ljust(6)} | #{i.purchase_date.ljust(13)} | #{i.purchase_price.to_s.ljust(14)} | #{i.current_price.to_s.ljust(13)} | #{i.num_shares.to_s.ljust(16)} | #{self.portfolio_name.ljust(14)} |"
         end
+<<<<<<< HEAD
         puts "\n"
     end
 
     # def portfolio_value
     #     self.investments.
     # end
+=======
+        nil
+    end
+>>>>>>> 44dfead65555e8d085761f622b33af5cd01f3687
 
     def validate_buy (symbol, num_shares)
         current_price = get_current_stock_price(symbol)
@@ -102,5 +116,18 @@ class Portfolio < ActiveRecord::Base
         puts "Portfolio Deleted."
     end
 
+<<<<<<< HEAD
     #Portfolio Value Method
 end
+=======
+    def portfolio_value
+        self.investments.map {|investment| investment.investment_value}.reduce(0) {|sum, value| sum + value} + self.current_cash
+    end
+
+
+
+
+
+
+end
+>>>>>>> 44dfead65555e8d085761f622b33af5cd01f3687

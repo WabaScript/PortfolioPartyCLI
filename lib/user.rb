@@ -34,6 +34,13 @@ class User < ActiveRecord::Base
         self.portfolios.map {|portfolio| portfolio.investments}
     end
 
+    def view_all_investments
+        self.portfolios.each do |portfolio|
+            portfolio.view_investments
+        end
+        nil
+    end
+
     def create_portfolio(p_name, initial_cash)
         Portfolio.create(user_id: self.id, portfolio_name: p_name, initial_cash: initial_cash, current_cash: initial_cash)
     end
