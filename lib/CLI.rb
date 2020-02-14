@@ -157,7 +157,11 @@ def portfolio_menu
         end
     when "Research Stock"
         symbol_input = $prompt.ask("Please enter stock ticker symbol:")
-        get_current_stock_data(symbol_input)
+        if get_current_stock_data(symbol_input) == false
+            puts "Sorry, that stock ticker symbol is invalid."
+        else
+            get_current_stock_data(symbol_input)
+        end
         portfolio_menu
     when "Return to Portfolio Menu"
         $active_portfolio = nil

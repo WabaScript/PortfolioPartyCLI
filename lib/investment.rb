@@ -39,7 +39,6 @@ class Investment < ActiveRecord::Base
         end
     end
 
-
     def delete_investment
         puts "Investment Deleted."
     end
@@ -49,7 +48,7 @@ class Investment < ActiveRecord::Base
     end
 
     def initial_inv_value
-        (self.purchase_price * self.num_shares)
+        self.purchase_price * self.num_shares
     end
 
     def investment_pl
@@ -57,9 +56,7 @@ class Investment < ActiveRecord::Base
     end
 
     def investment_pl_ratio
-        ratio = self.investment_pl / self.initial_inv_value * 100 
+        (self.investment_value - self.initial_inv_value) / self.initial_inv_value * 100
     end
-
-  
 
 end

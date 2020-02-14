@@ -18,10 +18,10 @@ class Portfolio < ActiveRecord::Base
     # end
 
     def view_investments
-        puts "\n| Portfolio ID: #{self.id} | Name: #{self.portfolio_name} | Current Cash: #{self.current_cash} | Value: #{self.portfolio_value} |"
-        puts "| Investmend ID | Symbol | Purchase Date | Purchase Price | Current Price | Number of Shares | Portfolio Name |"
+        puts "\n| Portfolio ID: #{self.id} | Name: #{self.portfolio_name} | Initial Cash: $#{self.initial_cash.round(0)} | Current Cash: $#{self.current_cash.round(0)} | Value: $#{self.portfolio_value.round(0)} | P&L: #{self.portfolio_pl.round(1)} | P&L %: #{self.portfolio_pl_ratio.round(1)} |"
+        puts "| Investmend ID | Symbol | Purchase Date | Purchase Price | Current Price | Number of Shares |   Value   |    P&L    | P&L % |"
         self.investments.each do |i|
-        puts "| #{i.id.to_s.ljust(14)}| #{i.symbol.ljust(6)} | #{i.purchase_date.ljust(13)} | #{i.purchase_price.to_s.ljust(14)} | #{i.current_price.to_s.ljust(13)} | #{i.num_shares.to_s.ljust(16)} | #{self.portfolio_name.ljust(14)} |"
+        puts "| #{i.id.to_s.ljust(14)}| #{i.symbol.ljust(6)} | #{i.purchase_date.ljust(13)} | #{i.purchase_price.to_s.ljust(14)} | #{i.current_price.to_s.ljust(13)} | #{i.num_shares.to_s.ljust(16)} | #{i.investment_value.round(1).to_s.ljust(9)} | #{i.investment_pl.round(1).to_s.ljust(9)} | #{i.investment_pl_ratio.round(1).to_s.ljust(5)} |"
         end
         nil
     end
@@ -113,7 +113,7 @@ class Portfolio < ActiveRecord::Base
 
 
     def initial_portfolio_value
-        self.investments.map {|investment| investment.initial_inv_value}.reduce(0) {|sum, value| sum + value} + self.initial_cash
+        self.investments.map {|investment| investment.initial_inv_value}.reduce(0) {|sum, value| sum + value} + self.current_cash
     end
 
     def portfolio_pl
@@ -121,7 +121,7 @@ class Portfolio < ActiveRecord::Base
     end
 
     def portfolio_pl_ratio
-        self.portfolio_value - self.initial_portfolio_value * 100 
+        (self.portfolio_value - self.initial_portfolio_value)/self.initial_portfolio_value * 100
     end
 
 end
