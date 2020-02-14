@@ -9,19 +9,31 @@ class Portfolio < ActiveRecord::Base
     end
 
     # def view_investments
-    #     puts "ID: #{self.id} Name: #{self.portfolio_name}\n"
-    #     puts "| Investmend ID | Symbol | Purchase Date | Purchase Price | Current Price | Number of Shares | Portfolio Name |"
+    #     puts "\n| Portfolio ID: #{self.id} | Name: #{self.portfolio_name} | Initial Cash: $#{self.initial_cash.round(0)} | Current Cash: $#{self.current_cash.round(0)} | Value: $#{self.portfolio_value.round(0)} | P&L: #{self.portfolio_pl.round(1)} | P&L %: #{self.portfolio_pl_ratio.round(1)} |".bold
+    #     puts "| Investmend ID | Symbol | Purchase Date | Purchase Price | Current Price | Number of Shares |   Value   |    P&L    | P&L % |"
     #     self.investments.each do |i|
-    #     puts "| #{i.id} | #{i.symbol} | #{i.purchase_date} | #{i.purchase_price} | #{i.current_price} | #{i.num_shares} | #{self.portfolio_name} |"
+    #     puts "| #{i.id.to_s.ljust(14)}| #{i.symbol.ljust(6)} | #{i.purchase_date.ljust(13)} | #{i.purchase_price.to_s.ljust(14)} | #{i.current_price.to_s.ljust(13)} | #{i.num_shares.to_s.ljust(16)} | #{i.investment_value.round(1).to_s.ljust(9)} | #{i.investment_pl.round(1).to_s.ljust(9)} | #{i.investment_pl_ratio.round(1).to_s.ljust(5)} |"
     #     end
-    #     puts "\n"
+    #     nil
     # end
 
     def view_investments
-        puts "\n| Portfolio ID: #{self.id} | Name: #{self.portfolio_name} | Initial Cash: $#{self.initial_cash.round(0)} | Current Cash: $#{self.current_cash.round(0)} | Value: $#{self.portfolio_value.round(0)} | P&L: #{self.portfolio_pl.round(1)} | P&L %: #{self.portfolio_pl_ratio.round(1)} |"
+        if self.portfolio_pl > 0
+            puts "\n| Portfolio ID: #{self.id} | Name: #{self.portfolio_name} | Initial Cash: $#{self.initial_cash.round(0)} | Current Cash: $#{self.current_cash.round(0)} | Value: $#{self.portfolio_value.round(0)} | P&L: #{self.portfolio_pl.round(1).to_s.green} | P&L %: #{self.portfolio_pl_ratio.round(1).to_s.green} |".bold
+        elsif self.portfolio_pl < 0
+            puts "\n| Portfolio ID: #{self.id} | Name: #{self.portfolio_name} | Initial Cash: $#{self.initial_cash.round(0)} | Current Cash: $#{self.current_cash.round(0)} | Value: $#{self.portfolio_value.round(0)} | P&L: #{self.portfolio_pl.round(1).to_s.red} | P&L %: #{self.portfolio_pl_ratio.round(1).to_s.red} |".bold
+        else 
+            puts "\n| Portfolio ID: #{self.id} | Name: #{self.portfolio_name} | Initial Cash: $#{self.initial_cash.round(0)} | Current Cash: $#{self.current_cash.round(0)} | Value: $#{self.portfolio_value.round(0)} | P&L: #{self.portfolio_pl.round(1)} | P&L %: #{self.portfolio_pl_ratio.round(1)} |".bold
+        end
         puts "| Investmend ID | Symbol | Purchase Date | Purchase Price | Current Price | Number of Shares |   Value   |    P&L    | P&L % |"
         self.investments.each do |i|
-        puts "| #{i.id.to_s.ljust(14)}| #{i.symbol.ljust(6)} | #{i.purchase_date.ljust(13)} | #{i.purchase_price.to_s.ljust(14)} | #{i.current_price.to_s.ljust(13)} | #{i.num_shares.to_s.ljust(16)} | #{i.investment_value.round(1).to_s.ljust(9)} | #{i.investment_pl.round(1).to_s.ljust(9)} | #{i.investment_pl_ratio.round(1).to_s.ljust(5)} |"
+            if i.investment_pl > 0
+                puts "| #{i.id.to_s.ljust(14)}| #{i.symbol.ljust(6)} | #{i.purchase_date.ljust(13)} | #{i.purchase_price.to_s.ljust(14)} | #{i.current_price.to_s.ljust(13)} | #{i.num_shares.to_s.ljust(16)} | #{i.investment_value.round(1).to_s.ljust(9)} | #{i.investment_pl.round(1).to_s.ljust(9).green} | #{i.investment_pl_ratio.round(1).to_s.ljust(5).green} |"
+            elsif i.investment_pl < 0
+                puts "| #{i.id.to_s.ljust(14)}| #{i.symbol.ljust(6)} | #{i.purchase_date.ljust(13)} | #{i.purchase_price.to_s.ljust(14)} | #{i.current_price.to_s.ljust(13)} | #{i.num_shares.to_s.ljust(16)} | #{i.investment_value.round(1).to_s.ljust(9)} | #{i.investment_pl.round(1).to_s.ljust(9).red} | #{i.investment_pl_ratio.round(1).to_s.ljust(5).red} |"
+            else
+                puts "| #{i.id.to_s.ljust(14)}| #{i.symbol.ljust(6)} | #{i.purchase_date.ljust(13)} | #{i.purchase_price.to_s.ljust(14)} | #{i.current_price.to_s.ljust(13)} | #{i.num_shares.to_s.ljust(16)} | #{i.investment_value.round(1).to_s.ljust(9)} | #{i.investment_pl.round(1).to_s.ljust(9)} | #{i.investment_pl_ratio.round(1).to_s.ljust(5)} |"
+            end
         end
         nil
     end

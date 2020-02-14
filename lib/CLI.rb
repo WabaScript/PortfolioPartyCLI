@@ -19,12 +19,12 @@ def main_title
 
     ********************************************************************************************************
      
-     "
+     ".green.bold
 end
 
 def main_menu
-    puts "\n\n|---------MAIN MENU---------|\n\n"
-    puts "Welcome to Portfolio Party v 2.0.3.2"
+    puts "\n\n|---------MAIN MENU---------|\n\n".light_yellow.bold
+    puts "Welcome to Portfolio Party v 2.0.3.2\n".blue.bold
     menu_options = ["Login", "Create New User", "Quit"]
     input = $prompt.select("Please choose an option:", menu_options)
     case input
@@ -33,12 +33,12 @@ def main_menu
     when "Create New User"
         create_a_new_user
     when "Quit"
-        puts "\n\nGoodbye\n\n"
+        puts "\n\nGoodbye\n\n".italic
     end
 end
 
 def login
-    puts "\n\n|---------PLEASE LOGIN---------|\n\n"
+    puts "\n\n|---------PLEASE LOGIN---------|\n\n".light_yellow.bold
     username_input = $prompt.ask("Please enter username:")
     password_input = $prompt.mask("Please enter password:")
     $active_user = User.all.find_by(username: username_input, password: password_input)
@@ -56,7 +56,7 @@ def login
 end
 
 def create_a_new_user
-    puts "\n\n|---------CREATE NEW USER---------|\n\n"
+    puts "\n\n|---------CREATE NEW USER---------|\n\n".light_yellow.bold
     puts "Username must be unique and cannot be changed after account creation.\n\n"
 
     username_input = $prompt.ask("Please enter new username:")
@@ -87,7 +87,7 @@ def create_a_new_user
 end
 
 def user_logged_in_menu
-    puts "\n\n|---------USER MENU---------|\n\n"
+    puts "\n\n|---------USER MENU---------|\n\n".light_yellow.bold
     puts "Your existing portfolios are:\n\n"
     $active_user.portfolios.each {|portfolio| puts "| ID: #{portfolio.id} | Name: #{portfolio.portfolio_name}"}
     puts "\n\n"
@@ -182,7 +182,7 @@ def user_logged_in_menu
 end
 
 def portfolio_menu
-    puts "\n\n|---------PORTFOLIO MENU---------|\n\n"
+    puts "\n\n|---------PORTFOLIO MENU---------|\n\n".light_yellow.bold
 
     $active_portfolio.view_investments
     puts "\n\n"
@@ -211,7 +211,7 @@ def portfolio_menu
             end
         else
             system("clear")
-            puts "Investment ID error.  Please try again."
+            puts "Investment ID error.  Please try again.\n\n"
             portfolio_menu
         end
     when "Research Stock"
@@ -233,7 +233,7 @@ def portfolio_menu
 end
 
 def modify_user
-    puts "\n\n|---------MODIFY USER MENU---------|\n\n"
+    puts "\n\n|---------MODIFY USER MENU---------|\n\n".light_yellow.bold
     puts "Current user details:\n\n"
     $active_user.display_information
     
