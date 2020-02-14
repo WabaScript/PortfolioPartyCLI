@@ -48,7 +48,7 @@ class Portfolio < ActiveRecord::Base
             transaction_price = current_price * num_shares
             self.update(current_cash: self.current_cash - transaction_price)
             new_investment = Investment.new(
-                symbol: symbol, 
+                symbol: symbol.upcase, 
                 purchase_price: current_price, 
                 current_price: current_price, 
                 purchase_date: current_date_to_YYYYMMDD, 
@@ -66,7 +66,7 @@ class Portfolio < ActiveRecord::Base
     def aggregate_investments_same_stock_and_date (new_investment)
         conbined_investment = nil
         self.investments.each do |investment|
-            if investment.symbol == new_investment.symbol && investment.purchase_date == current_date_to_YYYYMMDD
+            if investment.symbol.upcase == new_investment.symbol.upcase && investment.purchase_date == current_date_to_YYYYMMDD
                 conbined_investment = Investment.create(
                     symbol: new_investment.symbol, 
                     purchase_price: new_investment.current_price, 
@@ -82,17 +82,21 @@ class Portfolio < ActiveRecord::Base
     end
 
     def sell_stock_by_investment_id (investment_id, num_shares)
-        if Investment.find(investment_id).num_shares < num_shares
-            puts "Sorry, you do not have that many shares to sell."
-        else
-            Investment.find(investment_id).update(num_shares: Investment.find(investment_id).num_shares - num_shares)
-            transaction_price = num_shares * Investment.find(investment_id).current_price
-            self.update(current_cash: self.current_cash + transaction_price)
-            if Investment.find(investment_id).num_shares == 0
-                Investment.find(investment_id).delete
+        if Investment.exists?(investment_id)
+            if Investment.find(investment_id).num_shares < num_shares
+                puts "Sorry, you do not have that many shares to sell."
+            else
+                Investment.find(investment_id).update(num_shares: Investment.find(investment_id).num_shares - num_shares)
+                transaction_price = num_shares * Investment.find(investment_id).current_price
+                self.update(current_cash: self.current_cash + transaction_price)
+                if Investment.find(investment_id).num_shares == 0
+                    Investment.find(investment_id).delete
+                end
+                puts "Sale successful."
             end
+        else
+            puts "Investment ID is not valid! Please try again."
         end
-
     end
 
     def update_portfolio_to_current_prices

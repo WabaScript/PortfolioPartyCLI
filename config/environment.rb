@@ -5,6 +5,7 @@ require 'time'
 require 'json'
 require 'rest-client'
 require 'tty-prompt'
+require 'colorize'
 
 Bundler.require
 

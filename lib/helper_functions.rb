@@ -34,7 +34,6 @@ def get_current_stock_data(input)
         false
     else
         daily_stock_info = my_response["Time Series (Daily)"][current_date_to_YYYYMMDD]
-        return daily_stock_info.each {|key, value| puts "| #{key} | #{value}"}
     end
 end 
 
