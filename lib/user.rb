@@ -1,6 +1,7 @@
 
 class User < ActiveRecord::Base
     has_many :portfolios
+    has_many :investments, through: :portfolios
     
     def full_name
         "#{first_name} #{last_name}"
@@ -18,15 +19,6 @@ class User < ActiveRecord::Base
     def portfolios
         Portfolio.all.select {|portfolio| portfolio.user_id == self.id}
     end
-
-    ####Just for reference
-    # def investments
-    #     user_investments = []
-    #     self.portfolios.each do |portfolio|
-    #         user_investments << portfolio.investments
-    #     end
-    #     user_investments
-    # end
     
     ####Returns all investments for the user
     
